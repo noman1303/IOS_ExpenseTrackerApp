@@ -7,12 +7,7 @@
 
 A modern, feature-rich Expense Tracker iOS application built with SwiftUI. Track your income and expenses in real-time with a beautiful, finance-style interface that automatically updates balances and presents transactions in an intuitive way.
 
-<div align="center">
-  <img src="screenshots/demo.gif" alt="App Demo" width="250"/>
-  <img src="screenshots/home.png" alt="Home Screen" width="250"/>
-  <img src="screenshots/add.png" alt="Add Transaction" width="250"/>
-</div>
-
+ 
 ---
 
 ## ✨ Features
@@ -26,15 +21,7 @@ A modern, feature-rich Expense Tracker iOS application built with SwiftUI. Track
 - 🏗️ **Clean Architecture** - MVVM pattern with scalable, maintainable code
 
 ---
-
-## 📱 Screenshots
-
-| Dashboard | Add Transaction | Statistics | Profile |
-|-----------|----------------|------------|---------|
-| ![Dashboard](screenshots/dashboard.png) | ![Add](screenshots/add.png) | ![Stats](screenshots/stats.png) | ![Profile](screenshots/profile.png) |
-
----
-
+ 
 ## 🏗️ Project Architecture
 
 The app follows **MVVM (Model-View-ViewModel)** architecture using SwiftUI's declarative and data-driven approach.
