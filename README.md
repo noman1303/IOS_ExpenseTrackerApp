@@ -1,62 +1,82 @@
-Expense Tracker App (SwiftUI)
+# 💰 Expense Tracker App
 
-A modern Expense Tracker iOS application built using SwiftUI. The app allows users to add income and expenses in real time, automatically updates balances, and presents transactions in a clean, finance-style UI.
+![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)
+![Platform](https://img.shields.io/badge/Platform-iOS%2016.0+-lightgrey.svg)
+![SwiftUI](https://img.shields.io/badge/SwiftUI-4.0-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-This project focuses on clean architecture, real-time UI updates, and reusable SwiftUI components, making it suitable for learning, interviews, and portfolio use.
+A modern, feature-rich Expense Tracker iOS application built with SwiftUI. Track your income and expenses in real-time with a beautiful, finance-style interface that automatically updates balances and presents transactions in an intuitive way.
 
-⸻
+<div align="center">
+  <img src="screenshots/demo.gif" alt="App Demo" width="250"/>
+  <img src="screenshots/home.png" alt="Home Screen" width="250"/>
+  <img src="screenshots/add.png" alt="Add Transaction" width="250"/>
+</div>
 
-✨ Features
-    •    Add Income and Expense transactions
-    •    Real-time balance calculation
-    •    Categorized transactions with icons and colors
-    •    Dashboard with summary cards
-    •    Transaction history list
-    •    Tab-based navigation (Home, Stats, Add, Profile)
-    •    Clean and scalable SwiftUI architecture
+---
 
-⸻
+## ✨ Features
 
-🧱 Project Architecture
+- ✅ **Add Income & Expenses** - Quick transaction entry with category selection
+- 📊 **Real-time Balance Calculation** - Automatic updates as you add transactions
+- 🎨 **Categorized Transactions** - Visual icons and colors for different categories
+- 📱 **Modern Dashboard** - Clean summary cards showing your financial overview
+- 📜 **Transaction History** - Chronological list of all your financial activities
+- 🔄 **Tab Navigation** - Easy access to Home, Stats, Add, and Profile sections
+- 🏗️ **Clean Architecture** - MVVM pattern with scalable, maintainable code
 
-The app follows a MVVM-style architecture using SwiftUI’s data-driven approach.
+---
 
-ExpenseTrackerApp
+## 📱 Screenshots
+
+| Dashboard | Add Transaction | Statistics | Profile |
+|-----------|----------------|------------|---------|
+| ![Dashboard](screenshots/dashboard.png) | ![Add](screenshots/add.png) | ![Stats](screenshots/stats.png) | ![Profile](screenshots/profile.png) |
+
+---
+
+## 🏗️ Project Architecture
+
+The app follows **MVVM (Model-View-ViewModel)** architecture using SwiftUI's declarative and data-driven approach.
+
+```
+ExpenseTrackerApp/
 │
-├── App
-│   └── ExpenseTrackerAppApp.swift
+├── App/
+│   └── ExpenseTrackerAppApp.swift          # App entry point
 │
-├── Models
-│   └── Transaction.swift
+├── Models/
+│   └── Transaction.swift                    # Data models
 │
-├── ViewModels
-│   └── TransactionViewModel.swift
+├── ViewModels/
+│   └── TransactionViewModel.swift           # Business logic & state management
 │
-├── Views
-│   ├── DashboardView.swift
-│   ├── AddExpenseView.swift
-│   ├── StatisticsView.swift
-│   ├── ProfileView.swift
-│   └── MainTabView.swift
+├── Views/
+│   ├── DashboardView.swift                  # Main dashboard screen
+│   ├── AddExpenseView.swift                 # Transaction input form
+│   ├── StatisticsView.swift                 # Charts and analytics
+│   ├── ProfileView.swift                    # User profile settings
+│   └── MainTabView.swift                    # Tab navigation controller
 │
-├── Components
-│   ├── BalanceCardView.swift
-│   └── TransactionRowView.swift
+├── Components/
+│   ├── BalanceCardView.swift                # Reusable balance card
+│   └── TransactionRowView.swift             # Transaction list item
 │
-└── Utilities
-    └── Color+Hex.swift
+└── Utilities/
+    └── Color+Hex.swift                      # Color extensions
+```
 
+---
 
-⸻
+## 🔄 Application Flow
 
-🔄 Application Flow
+### 1️⃣ **App Launch**
 
-1️⃣ App Launch
-
+```swift
 @main
 struct ExpenseTrackerAppApp: App {
     @StateObject var vm = TransactionViewModel()
-
+    
     var body: some Scene {
         WindowGroup {
             MainTabView()
@@ -64,64 +84,70 @@ struct ExpenseTrackerAppApp: App {
         }
     }
 }
+```
 
-    •    TransactionViewModel is created once using @StateObject
-    •    Injected into the entire app using environmentObject
-    •    Acts as a single source of truth
+- `TransactionViewModel` is created once using `@StateObject`
+- Injected throughout the app via `environmentObject`
+- Acts as a **single source of truth** for all transaction data
 
-⸻
+### 2️⃣ **Main Tab Navigation**
 
-2️⃣ Main Tab Navigation
-
-MainTabView controls global navigation using TabView.
-
+```swift
 TabView {
     DashboardView()
+        .tabItem { Label("Home", systemImage: "house.fill") }
+    
     StatisticsView()
+        .tabItem { Label("Stats", systemImage: "chart.bar.fill") }
+    
     AddExpenseView()
+        .tabItem { Label("Add", systemImage: "plus.circle.fill") }
+    
     ProfileView()
+        .tabItem { Label("Profile", systemImage: "person.fill") }
 }
+```
 
 Each tab represents a major feature area of the app.
 
-⸻
-
-3️⃣ Dashboard (Home Screen)
+### 3️⃣ **Dashboard (Home Screen)**
 
 The dashboard displays:
-    •    Greeting header
-    •    Total balance card
-    •    Income & Expense summary
-    •    Transaction history
+- 👋 Personalized greeting header
+- 💵 Total balance card
+- 📊 Income & Expense summary
+- 📋 Transaction history list
 
-Data automatically updates when transactions change.
-
+```swift
 @EnvironmentObject var vm: TransactionViewModel
+```
 
-SwiftUI automatically refreshes the UI when @Published data changes.
+SwiftUI automatically refreshes the UI when `@Published` data changes.
 
-⸻
+### 4️⃣ **Adding Transactions**
 
-4️⃣ Adding Transactions
+Users can add new income or expenses from `AddExpenseView`:
 
-Users add new income or expense from AddExpenseView.
-
+```swift
 vm.addTransaction(
     title: title,
     amount: value,
-    type: type
+    type: type,
+    category: category
 )
+```
 
-    •    New transactions are inserted into the list
-    •    Dashboard updates instantly
-    •    No manual reload required
+- New transactions are inserted into the list
+- Dashboard updates **instantly**
+- No manual reload required ✨
 
-⸻
+---
 
-🧠 Core Logic Explained
+## 🧠 Core Logic
 
-Transaction Model
+### Transaction Model
 
+```swift
 struct Transaction: Identifiable {
     let id = UUID()
     let title: String
@@ -130,56 +156,67 @@ struct Transaction: Identifiable {
     let type: TransactionType
     let category: Category
 }
+```
 
-    •    Represents a single financial record
-    •    Conforms to Identifiable for SwiftUI lists
+- Represents a single financial record
+- Conforms to `Identifiable` for SwiftUI lists
+- Includes type (Income/Expense) and category
 
-⸻
+### ViewModel (Business Logic)
 
-ViewModel (Business Logic)
-
+```swift
 class TransactionViewModel: ObservableObject {
     @Published var transactions: [Transaction] = []
-
-    var totalIncome: Double { ... }
-    var totalExpense: Double { ... }
-    var totalBalance: Double { ... }
+    
+    var totalIncome: Double { 
+        transactions.filter { $0.type == .income }
+                    .reduce(0) { $0 + $1.amount }
+    }
+    
+    var totalExpense: Double { 
+        transactions.filter { $0.type == .expense }
+                    .reduce(0) { $0 + $1.amount }
+    }
+    
+    var totalBalance: Double { 
+        totalIncome - totalExpense 
+    }
+    
+    func addTransaction(...) { ... }
 }
+```
 
-Responsibilities:
-    •    Store transactions
-    •    Compute totals
-    •    Notify views about changes
+**Responsibilities:**
+- 📦 Store all transactions
+- 🧮 Compute financial totals
+- 🔔 Notify views about changes
 
-⸻
-
-Real-Time UI Updates
+### Real-Time UI Updates
 
 SwiftUI automatically updates the UI because:
-    •    transactions is marked with @Published
-    •    Views observe changes via @EnvironmentObject
+- `transactions` is marked with `@Published`
+- Views observe changes via `@EnvironmentObject`
 
-No delegates, notifications, or reload calls are needed.
+**No delegates, notifications, or reload calls needed!**
 
-⸻
+### Reusable Components
 
-Transaction Row Component
-
-TransactionRowView receives a full model instead of individual values.
-
+```swift
 TransactionRowView(transaction: item)
+```
 
-This keeps:
-    •    Formatting logic inside the view
-    •    Dashboard code clean
-    •    Easy scalability for future fields
+Benefits:
+- ✅ Formatting logic stays inside the view
+- ✅ Dashboard code remains clean
+- ✅ Easy to extend with new fields
 
-⸻
+---
 
-🎨 UI Design Principles Used
-    •    ZStack for layered layouts
-    •    VStack / HStack for structure
-    •    Reusable components for cards and rows
-    •    Shadows and rounded corners for modern finance UI
-    •    Dynamic formatting using String(format:)
+## 🎨 UI Design Principles
+
+- **ZStack** - Layered layouts for overlapping elements
+- **VStack / HStack** - Structured vertical and horizontal layouts
+- **Reusable Components** - Cards and rows for consistency
+- **Modern Finance UI** - Shadows, rounded corners, and gradients
+- **Dynamic Formatting** - Currency and number formatting using `String(format:)`
  
